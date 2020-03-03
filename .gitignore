@@ -1,0 +1,13 @@
+*.pyc
+*.gdb/
+*.tbx
+*.mxd
+csv_intermediate/
+csv_final/
+*.xml
+*.csv
+*.ini
+*.xlsx
+*.xls
+*.txt
+*.txt~
