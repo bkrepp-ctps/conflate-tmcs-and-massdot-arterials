@@ -7,10 +7,10 @@
 # This script performs the conversion one 'route' at a time; the result are two sets of FC's, each set to be subsequently combined
 # into a single FC using the 'Merge' tool.
 #
-# NOTE: For the re-generation of LRSE feature classes for arterials, this script has been supplanted by the
-#       scripts regenerate_LRSE_FCs_for_arterials_pass_1.py and regenerate_LRSE_FCs_for_arterials_pass_1.py
-#      (03/16/2020)
-#
+# NOTE (03/16/2020): For the re-generation of LRSE feature classes for arterials, this script has been supplanted by the
+#                    scripts regenerate_LRSE_FCs_for_arterials_pass_1.py and regenerate_LRSE_FCs_for_arterials_pass_1.py
+#      
+# NOTE (03/23/2020): The above two-pass process is being replaced by the "brute force" approach, described above.
 #
 # Ben Krepp, attending metaphysician
 # 03/12/2020, 03/16/2020
