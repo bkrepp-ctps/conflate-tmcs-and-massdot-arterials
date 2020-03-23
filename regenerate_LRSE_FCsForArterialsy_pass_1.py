@@ -1,3 +1,15 @@
+# *** NOTE ***
+#     As of 3/20/2020, this script and its companion have been supplanted by  
+#     a "brute force" technique for regenerating the LRSE feature classes.
+#     This technique is:
+#     1. Perform "Locate Features Along Routes" on ALL records in each relevant MassDOT LRSN feature class
+#     2. Perform a "Make Route Event Layer" using the event table generated in step (1)
+#     3. Save the resulting layer as a feature class.
+# 
+# -- Ben Krepp (2/23/2020)
+#
+# Old code and comments retained below for reference purpose:
+#
 # regenerate_LRSE_FCs_for_arterials_pass_1.py - script to re-generate selected LRSE feature classes 
 #                                               from LRSN route geometry and LRSE event tables
 #                                               for ARTERIAL routes.
