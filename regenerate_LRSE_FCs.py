@@ -7,10 +7,18 @@
 # This script performs the conversion one 'route' at a time; the result are two sets of FC's, each set to be subsequently combined
 # into a single FC using the 'Merge' tool.
 #
+# NOTE: For the re-generation of LRSE feature classes for arterials, this script has been supplanted by the
+#       scripts regenerate_LRSE_FCs_for_arterials_pass_1.py and regenerate_LRSE_FCs_for_arterials_pass_1.py
+#      (03/16/2020)
+#
+#
 # Ben Krepp, attending metaphysician
-# 02/20/2020 - what a cool-looking date string, YOWSAH!
+# 03/12/2020, 03/16/2020
 
 import arcpy
+
+arcpy.AddError("This script has been supplanted by regenerate_LRSE_FCs_for_arterials.py");
+exit()
 
 # Single (optional) parameter, specifying a file containing a newline-delimited list of MassDOT route_ids.  
 route_list_file_name = arcpy.GetParameterAsText(0)  
@@ -22,18 +30,41 @@ if route_list_file_name != '':
         arcpy.AddMessage(route_id)
     # for   
 else:
-    route_list = [ 'SR107 NB', 'SR107 SB', 'SR109 EB' , 'SR109 WB', 'SR114 EB', 'SR114 WB', 'SR115 NB', 'SR115 SB',
-                   'SR117 EB', 'SR117 WB', 'SR119 EB', 'SR119 WB', 'SR123 EB','SR123 WB', 'SR126 NB', 'SR126 SB',
-                   'SR135 EB', 'SR135 SB', 'SR138 NB', 'SR138 SB', 'SR139 EB', 'SR139 WB', 'SR140 EB', 'SR140 WB',
-                   'SR16 EB', 'SR16 WB', 'SR18 NB', 'SR18 SB', 'SR1A NB', 'SR1A SB',                    
-                   'SR203 EB', 'SR203 WB', 'SR228 NB', 'SR228 SB', 'SR27 NB', 'SR27 SB', 'SR28 NB', 'SR28 SB',
-                   'SR2A EB', 'SR2A WB', 'SR30 EB', 'SR30 WB', 'SR37 NB', 'SR37 SB', 'SR38 NB', 'SR38 SB',
-                   'SR3A NB', 'SR3A SB', 
-                   'SR4 NB', 'SR4 SB', 'SR225 EB', 'SR225 WB',
-                   'SR53 NB', 'SR53 SB', 'SR60 EB', 'SR60 WB', 'SR62 EB', 'SR62 WB', 'SR85 NB', 'SR85 SB',
-                   'SR9 EB', 'SR8 WB', 'SR99 NB', 'SR99 SB', 'SR129 EB', 'SR129 WB', 
-                   'SR3A NB', 'SR3A SB',
-                   'US1 NB', 'US1 SB', 'US20 EB', 'US20 WB' ]
+    route_list = [ 'SR107 NB', 'SR107 SB', 
+                   'SR109 EB', 'SR109 WB', 
+                   'SR114 EB', 'SR114 WB', 
+                   'SR115 NB', 'SR115 SB',
+                   'SR117 EB', 'SR117 WB', 
+                   'SR119 EB', 'SR119 WB', 
+                   'SR123 EB', 'SR123 WB', 
+                   'SR126 NB', 'SR126 SB',
+                   'SR129 EB', 'SR129 WB',
+                   'SR135 EB', 'SR135 SB', 
+                   'SR138 NB', 'SR138 SB', 
+                   'SR139 EB', 'SR139 WB', 
+                   'SR140 EB', 'SR140 WB',
+                   'SR16 EB',  'SR16 WB',
+                   'SR18 NB',  'SR18 SB', 
+                   'SR1A NB',  'SR1A SB',                    
+                   'SR203 EB', 'SR203 WB', 
+                   'SR225 EB', 'SR225 WB',
+                   'SR228 NB', 'SR228 SB', 
+                   'SR27 NB',  'SR27 SB', 
+                   'SR28 NB',  'SR28 SB',
+                   'SR2A EB',  'SR2A WB', 
+                   'SR30 EB',  'SR30 WB', 
+                   'SR37 NB',  'SR37 SB', 
+                   'SR38 NB',  'SR38 SB',
+                   'SR3A NB',  'SR3A SB', 
+                   'SR4 NB',   'SR4 SB',                   
+                   'SR53 NB',  'SR53 SB', 
+                   'SR60 EB',  'SR60 WB', 
+                   'SR62 EB',  'SR62 WB', 
+                   'SR85 NB',  'SR85 SB',
+                   'SR9 EB',   'SR9 WB', 
+                   'SR99 NB',  'SR99 SB',                     
+                   'US1 NB',   'US1 SB', 
+                   'US20 EB',  'US20 WB' ]
 # end_if
 
 # MassDOT LRSN_Routes - the route geometry here is assumed to be definitive
@@ -78,7 +109,10 @@ arcpy.MakeFeatureLayer_management(LRSE_Number_Travel_Lanes, Num_Lanes_Layer)
 for route_id in route_list:
     arcpy.AddMessage("Processing " + route_id)
     
-    MassDOT_route_query_string = "route_id = " + "'" + route_id + "'"   
+    MassDOT_route_query_string = "route_id = " + "'" + route_id + "'" 
+    
+    arcpy.AddMessage('MassDOT_route_query_string = ' + MassDOT_route_query_string)
+    
     normalized_route_id = route_id.replace(' ', '_')    
     sl_et_name = normalized_route_id + '_sl_events'
     sl_layer_name = normalized_route_id + '_sl_layer'
