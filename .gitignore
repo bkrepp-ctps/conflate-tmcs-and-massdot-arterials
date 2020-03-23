@@ -11,3 +11,5 @@ csv_final/
 *.xls
 *.txt
 *.txt~
+tmc_lists_quoted/
+tmc_lists_raw/
