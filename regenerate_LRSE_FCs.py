@@ -1,4 +1,13 @@
-# regenerate_LRSE_FCs.py - script to re-generate selected LRSE feature classes from LRSN route geometry and LRSE event tables
+# regenerate_LRSE_FCs.py - script to re-generate selected LRSE feature classes from 
+#                          LRSN route geometry and LRSE feature classes.
+#
+# *** NOTE ***
+# The "brute force" approach taken here is as follows:
+#     1. Perform "Locate Features Along Routes" on ALL records in each relevant MassDOT LRSN feature class
+#     2. Perform a "Make Route Event Layer" using the event table generated in step (1)
+#     3. Save the resulting layer as a feature class.
+# 
+# Old comments retained below for reference purposes:
 #
 # This script was written to deal with MassDOT LRSE FC's becoming out-of-sync with the LRSN route layer because of changes (edits)
 # to LRSN route geometry. This was found to be the case, for example, for SR2 EB and WB in the "LRSN + LRSE" data copied from
@@ -13,12 +22,11 @@
 # NOTE (03/23/2020): The above two-pass process is being replaced by the "brute force" approach, described above.
 #
 # Ben Krepp, attending metaphysician
-# 03/12/2020, 03/16/2020
+# 03/12/2020, 03/16/2020, 3/23/2020
 
 import arcpy
 
-arcpy.AddError("This script has been supplanted by regenerate_LRSE_FCs_for_arterials.py");
-exit()
+
 
 # Single (optional) parameter, specifying a file containing a newline-delimited list of MassDOT route_ids.  
 route_list_file_name = arcpy.GetParameterAsText(0)  
@@ -67,13 +75,16 @@ else:
                    'US20 EB',  'US20 WB' ]
 # end_if
 
+# Connection file for read-only connection to ArcGIS 10.6 SDE mpodata.mpodata database
+sde_mpodata_ro_connection = r'\\lindalino\users\Public\Documents\Public ArcGIS\Database Connections\CTPS 10.6.sde'
+
 # MassDOT LRSN_Routes - the route geometry here is assumed to be definitive
 #
-MASSDOT_LRSN_Routes_19Dec2019 = r'\\lindalino\users\Public\Documents\Public ArcGIS\CTPS data from database servers for ITS\SDE 10.6.sde\mpodata.mpodata.CTPS_RoadInventory_for_INRIX_2019\mpodata.mpodata.MASSDOT_LRSN_Routes_19Dec2019'
+MASSDOT_LRSN_Routes_19Dec2019 = sde_mpodata_ro_connection + '\mpodata.mpodata.MASSDOT_LRSN_Routes_19Dec2019'
 
 # MassDOT speed limit LRSE - geometry here may be out of sync w.r.t. LRSN_Routes; event table data is assumed to be OK.
 #
-LRSE_Speed_Limit = r'\\lindalino\users\Public\Documents\Public ArcGIS\CTPS data from database servers for ITS\SDE 10.6.sde\mpodata.mpodata.CTPS_RoadInventory_for_INRIX_2019\mpodata.mpodata.LRSE_Speed_Limit'
+LRSE_Speed_Limit = sde_mpodata_ro_connection + '\mpodata.mpodata.CTPS_RoadInventory_for_INRIX_2019\mpodata.mpodata.LRSE_Speed_Limit'
 
 # Layer containing data selected from the above
 #
@@ -81,7 +92,7 @@ Speed_Limit_Layer = "Speed_Limit_Layer"
 
 # MassDOT number of travel lanes LRSE - geometry here may be out of sync w.r.t. LRSN_Routes; event table data is assumed to be OK.
 #
-LRSE_Number_Travel_Lanes = r'\\lindalino\users\Public\Documents\Public ArcGIS\CTPS data from database servers for ITS\SDE 10.6.sde\mpodata.mpodata.CTPS_RoadInventory_for_INRIX_2019\mpodata.mpodata.LRSE_Number_Travel_Lanes'
+LRSE_Number_Travel_Lanes = sde_mpdata_ro_connection + '\mpodata.mpodata.CTPS_RoadInventory_for_INRIX_2019\mpodata.mpodata.LRSE_Number_Travel_Lanes'
 # Layer containing data selected from the above
 
 Num_Lanes_Layer = "Num_Lanes_Layer"
